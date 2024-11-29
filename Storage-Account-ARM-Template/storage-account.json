@@ -1,0 +1,62 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "storageAccountName": {
+      "type": "string",
+      "defaultValue": "susanstorageaccount1",
+      "minLength": 3,
+      "maxLength": 24,
+      "metadata": {
+        "description": "Name of the storage account"
+      }
+    },
+    "storageAccountTier": {
+      "type": "string",
+      "metadata": {
+        "description": "Tier of storage account"
+      },
+      "defaultValue": "Premium",
+      "allowedValues": ["Premium", "Standard"]
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "Central India",
+      "metadata": {
+        "description": "Azure region where the resource will be deployed"
+      }
+    },
+    "skuName": {
+      "type": "string",
+      "defaultValue": "Premium_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Premium_LRS",
+        "Standard_ZRS",
+        "Premium_ZRS"
+      ],
+      "metadata": {
+        "description": "SKU (pricing tier) of the storage account"
+      }
+    }
+  },
+  "functions": [],
+  "variables": {},
+  "resources": [
+    {
+      "name": "[parameters('storageAccountName')]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2023-04-01",
+      "tags": {
+        "displayName": "[parameters('storageAccountName')]"
+      },
+      "location": "[parameters('location')]",
+      "kind": "StorageV2",
+      "sku": {
+        "name": "[parameters('skuName')]",
+        "tier": "[parameters('storageAccountTier')]"
+      }
+    }
+  ],
+  "outputs": {}
+}
